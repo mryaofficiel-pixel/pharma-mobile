@@ -12,9 +12,9 @@ export default function Recherche({ navigation }) {
     setChargement(true);
     setErreur('');
     try {
-      const response = await fetch('http://10.115.104.247:3000/recherche/' + recherche);
+      const response = await fetch('https://pharma-app-production.up.railway.app/recherche/' + recherche);
       const data = await response.json();
-      setResultats(data); if(data.length > 0) navigation.navigate('Resultats', { resultats: data, recherche: recherche }); if(data.length > 0) navigation.navigate('Resultats', { resultats: data, recherche: recherche });
+      setResultats(data); if(data.length > 0) navigation.navigate('Resultats', { resultats: data, recherche: recherche });
     } catch (e) {
       setErreur('Impossible de contacter le serveur');
     }
