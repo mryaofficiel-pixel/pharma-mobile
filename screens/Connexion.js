@@ -26,7 +26,7 @@ export default function Connexion({ navigation }) {
         onChangeText={setMotDePasse}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.bouton}>
+        <TouchableOpacity style={styles.bouton} onPress={() => navigation.navigate('Menu')}>
         <Text style={styles.boutonTexte}>Se connecter</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.lien} onPress={() => navigation.navigate('Inscription')}>
