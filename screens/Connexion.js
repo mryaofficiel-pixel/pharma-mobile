@@ -1,9 +1,36 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { useState } from 'react';
 
 export default function Connexion({ navigation }) {
   const [email, setEmail] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
+  const [chargement, setChargement] = useState(false);
+
+  const seConnecter = async () => {
+    if (!email.trim() || !motDePasse.trim()) {
+      Alert.alert('Erreur', 'Veuillez remplir tous les champs');
+      return;
+    }
+    setChargement(true);
+    try {
+      const response = await fetch('http://10.115.104.247:3000/auth/connexion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, mot_de_passe: motDePasse })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        global.token = data.token;
+        global.utilisateur = data.utilisateur;
+        navigation.navigate('Menu');
+      } else {
+        Alert.alert('Erreur', data.message || 'Identifiants incorrects');
+      }
+    } catch (e) {
+      Alert.alert('Erreur', 'Impossible de contacter le serveur');
+    }
+    setChargement(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -26,9 +53,13 @@ export default function Connexion({ navigation }) {
         onChangeText={setMotDePasse}
         secureTextEntry
       />
-        <TouchableOpacity style={styles.bouton} onPress={() => navigation.navigate('Menu')}>
-        <Text style={styles.boutonTexte}>Se connecter</Text>
-      </TouchableOpacity>
+      {chargement ? (
+        <ActivityIndicator size='large' color='#1d6d80' style={{ marginTop: 16 }} />
+      ) : (
+        <TouchableOpacity style={styles.bouton} onPress={seConnecter}>
+          <Text style={styles.boutonTexte}>Se connecter</Text>
+        </TouchableOpacity>
+      )}
       <TouchableOpacity style={styles.lien} onPress={() => navigation.navigate('Inscription')}>
         <Text style={styles.lienTexte}>Pas encore de compte ? S inscrire</Text>
       </TouchableOpacity>
