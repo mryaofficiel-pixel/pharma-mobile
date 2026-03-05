@@ -1,0 +1,21 @@
+{
+  "name": "pharma-final",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@react-navigation/native": "^7.1.33",
+    "@react-navigation/stack": "^7.8.4",
+    "expo": "~50.0.20",
+    "react": "^18.2.0",
+    "react-native": "^0.73.6",
+    "react-native-safe-area-context": "^5.7.0",
+    "react-native-screens": "^4.24.0"
+  }
+}
